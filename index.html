@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bellande Industries - Secure Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #particles-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            background: rgba(15, 15, 30, 0.95);
+            padding: 2rem;
+            border-radius: 0px;
+            box-shadow: 
+                0 0 60px rgba(0, 200, 255, 0.3),
+                0 0 100px rgba(0, 150, 255, 0.2),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+            width: 100%;
+            max-width: 420px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            position: relative;
+            z-index: 10;
+            transition: all 0.4s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 0 80px rgba(0, 200, 255, 0.4),
+                0 0 120px rgba(0, 150, 255, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+
+        .logo h1 {
+            color: #00d4ff;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 
+                0 0 10px rgb(0, 213, 255),
+                0 0 10px rgb(0, 213, 255);
+            font-weight: 300;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo p {
+            color: #b0c4de;
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: #00d4ff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 0px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:focus {
+            border-color: #00d4ff;
+            box-shadow: 
+                0 0 20px rgba(0, 212, 255, 0.4),
+                inset 0 0 10px rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:focus + label {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #003366, #0066cc, #00d4ff);
+            color: white;
+            border: none;
+            border-radius: 0px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 6px 25px rgba(0, 212, 255, 0.5),
+                0 0 30px rgba(0, 212, 255, 0.3);
+            background: linear-gradient(45deg, #0066cc, #00d4ff, #00ffff);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .switch-form a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .switch-form a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #0099ff);
+            transition: width 0.3s ease;
+        }
+
+        .switch-form a:hover::after {
+            width: 100%;
+        }
+
+        .switch-form a:hover {
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+        }
+
+        .message {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .message.error {
+            background: rgba(255, 70, 70, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 70, 70, 0.5);
+            box-shadow: 0 0 20px rgba(255, 70, 70, 0.3);
+        }
+
+        .nas-interface {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .nas-header {
+            background: rgba(10, 10, 20, 0.9);
+            color: #00d4ff;
+            padding: 1.5rem;
+            border-radius: 0px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
+        }
+
+        .logout-btn {
+            background: linear-gradient(45deg, #ff3366, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 51, 102, 0.5);
+        }
+
+        .file-browser {
+            border: 2px solid rgba(0, 150, 255, 0.3);
+            border-radius: 0px;
+            padding: 1.5rem;
+            min-height: 450px;
+            background: rgba(10, 10, 20, 0.8);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+        }
+
+        .file-browser h3 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+        }
+
+        .folder {
+            padding: 1rem;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 0px;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(20, 20, 30, 0.6);
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .folder::before {
+            content: "📁";
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .folder:hover::before {
+            transform: scale(1.2);
+        }
+
+        .folder:hover {
+            background: rgba(0, 150, 255, 0.15);
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
+            transform: translateX(10px);
+        }
+
+        .folder::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2));
+            transition: width 0.3s ease;
+        }
+
+        .folder:hover::after {
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .auth-form {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+                max-width: calc(100% - 2rem);
+            }
+
+            .logo h1 {
+                font-size: 2rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.2rem;
+            }
+
+            .form-group input {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .logo {
+                margin-bottom: 1.5rem;
+            }
+
+            .logo h1 {
+                font-size: 2rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group input {
+                padding: 0.8rem;
+            }
+
+            .btn {
+                padding: 0.8rem;
+                margin-top: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-background"></canvas>
+    
+    <div class="container">
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-form">
+            <div class="logo">
+                <h1>SECURE LOGIN</h1>
+                <p>Access Control System</p>
+            </div>
+            
+            <div id="message"></div>
+            
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <input type="text" id="loginUsername" placeholder="username" required>
+                    <label for="loginUsername"></label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="password" required>
+                    <label for="loginPassword"></label>
+                </div>
+                
+                <button type="submit" class="btn">
+                    Access System
+                </button>
+            </form>
+            
+            <div class="switch-form">
+                <a href="#" id="showSignup">Create New Account</a>
+            </div>
+        </div>
+        
+        <!-- Registration Form -->
+        <div id="signupForm" class="auth-form hidden">
+            <div class="logo">
+                <h1>REGISTRATION</h1>
+                <p>Create New Account</p>
+            </div>
+            
+            <div id="signupMessage"></div>
+            
+            <form id="signupFormElement">
+                <div class="form-group">
+                    <input type="text" id="signupUsername" placeholder="Choose username" required>
+                    <label for="signupUsername"></label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="signupPassword" placeholder="Create password" required>
+                    <label for="signupPassword"></label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                    <label for="confirmPassword"></label>
+                </div>
+                
+                <button type="submit" class="btn">
+                    Create Account
+                </button>
+            </form>
+            
+            <div class="switch-form">
+                <a href="#" id="showLogin">Already have an account? Login</a>
+            </div>
+        </div>
+        
+        <!-- NAS Interface -->
+        <div id="nasInterface" class="nas-interface">
+            <div class="nas-header">
+                <h2>Welcome back - <span id="currentUser"></span></h2>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+            
+            <div class="file-browser">
+                <h3>Available Directories</h3>
+                <div class="folder" data-folder="documents">Documents</div>
+                <div class="folder" data-folder="images">Images</div>
+                <div class="folder" data-folder="videos">Videos</div>
+                <div class="folder" data-folder="music">Music</div>
+                <div class="folder" data-folder="projects">Projects</div>
+                <div class="folder" data-folder="backup">Backup</div>
+                <div class="folder" data-folder="shared">Shared Files</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animated particles background
+        class ParticleSystem {
+            constructor() {
+                this.canvas = document.getElementById('particles-background');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.mousePos = { x: 0, y: 0 };
+                this.mouseRadius = 120;
+                
+                this.init();
+            }
+            
+            init() {
+                this.resize();
+                this.createParticles();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resize());
+                window.addEventListener('mousemove', (e) => {
+                    this.mousePos.x = e.clientX;
+                    this.mousePos.y = e.clientY;
+                });
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticles() {
+                const particleCount = 80;
+                this.particles = [];
+                
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.8,
+                        vy: (Math.random() - 0.5) * 0.8,
+                        radius: Math.random() * 3 + 1,
+                        opacity: Math.random() * 0.8 + 0.2,
+                        pulsePhase: Math.random() * Math.PI * 2,
+                        connected: false
+                    });
+                }
+            }
+            
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    particle.pulsePhase += 0.02;
+                    
+                    // Bounce off edges
+                    if (particle.x <= 0 || particle.x >= this.canvas.width) particle.vx *= -1;
+                    if (particle.y <= 0 || particle.y >= this.canvas.height) particle.vy *= -1;
+                    
+                    // Mouse interaction
+                    const dx = particle.x - this.mousePos.x;
+                    const dy = particle.y - this.mousePos.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < this.mouseRadius) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (this.mouseRadius - distance) / this.mouseRadius;
+                        particle.vx += Math.cos(angle) * force * 0.5;
+                        particle.vy += Math.sin(angle) * force * 0.5;
+                    }
+                    
+                    // Limit velocity
+                    const maxSpeed = 2;
+                    const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
+                    if (speed > maxSpeed) {
+                        particle.vx = (particle.vx / speed) * maxSpeed;
+                        particle.vy = (particle.vy / speed) * maxSpeed;
+                    }
+                });
+            }
+            
+            drawConnections() {
+                const maxDistance = 100;
+                
+                for (let i = 0; i < this.particles.length; i++) {
+                    for (let j = i + 1; j < this.particles.length; j++) {
+                        const dx = this.particles[i].x - this.particles[j].x;
+                        const dy = this.particles[i].y - this.particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < maxDistance) {
+                            const opacity = (1 - distance / maxDistance) * 0.3;
+                            
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+                            this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+                            this.ctx.strokeStyle = `rgba(0, 200, 255, ${opacity})`;
+                            this.ctx.lineWidth = 1;
+                            this.ctx.stroke();
+                        }
+                    }
+                }
+            }
+            
+            drawParticles() {
+                this.particles.forEach(particle => {
+                    const pulse = Math.sin(particle.pulsePhase) * 0.3 + 0.7;
+                    const radius = particle.radius * pulse;
+                    
+                    // Outer glow
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, radius * 3, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(0, 200, 255, ${particle.opacity * 0.1})`;
+                    this.ctx.fill();
+                    
+                    // Main particle
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(0, 200, 255, ${particle.opacity * pulse})`;
+                    this.ctx.fill();
+                    
+                    // Inner bright spot
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, radius * 0.4, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity * 0.8})`;
+                    this.ctx.fill();
+                });
+            }
+            
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.updateParticles();
+                this.drawConnections();
+                this.drawParticles();
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize particle system
+        const particleSystem = new ParticleSystem();
+
+        // User management system (in-memory storage)
+        let users = {};
+        let currentUser = null;
+
+        // DOM elements
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const nasInterface = document.getElementById('nasInterface');
+        const message = document.getElementById('message');
+        const signupMessage = document.getElementById('signupMessage');
+        const currentUserSpan = document.getElementById('currentUser');
+
+        // Form switching
+        document.getElementById('showSignup').addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+            clearMessages();
+        });
+
+        document.getElementById('showLogin').addEventListener('click', (e) => {
+            e.preventDefault();
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            clearMessages();
+        });
+
+        // Registration handling
+        document.getElementById('signupFormElement').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validation
+            if (password !== confirmPassword) {
+                showMessage(signupMessage, 'Passwords do not match', 'error');
+                return;
+            }
+            
+            if (username.length < 3) {
+                showMessage(signupMessage, 'Username must be at least 3 characters', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage(signupMessage, 'Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            if (users[username]) {
+                showMessage(signupMessage, 'Username already exists', 'error');
+                return;
+            }
+            
+            // Create user
+            users[username] = {
+                password: password,
+                role: 'user',
+                createdAt: new Date().toISOString()
+            };
+            
+            showMessage(signupMessage, 'Account created successfully!', 'success');
+            
+            // Switch to login form after delay
+            setTimeout(() => {
+                signupForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+                clearMessages();
+            }, 2000);
+        });
+
+        // Login handling
+        document.getElementById('loginFormElement').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            // Verification
+            if (!users[username] || users[username].password !== password) {
+                showMessage(message, 'Invalid username or password', 'error');
+                return;
+            }
+            
+            // Successful login
+            currentUser = username;
+            currentUserSpan.textContent = username;
+            
+            loginForm.classList.add('hidden');
+            nasInterface.style.display = 'block';
+            
+            showMessage(message, 'Login successful!', 'success');
+        });
+
+        // Logout handling
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            currentUser = null;
+            nasInterface.style.display = 'none';
+            loginForm.classList.remove('hidden');
+            clearMessages();
+            
+            // Reset forms
+            document.getElementById('loginFormElement').reset();
+            document.getElementById('signupFormElement').reset();
+        });
+
+        // Folder click handling
+        document.querySelectorAll('.folder').forEach(folder => {
+            folder.addEventListener('click', () => {
+                const folderName = folder.dataset.folder;
+                const folderText = folder.textContent;
+                
+                // Create a simple modal-style alert
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                `;
+                
+                const modalContent = document.createElement('div');
+                modalContent.style.cssText = `
+                    background: rgba(15, 15, 30, 0.95);
+                    padding: 2rem;
+                    border-radius: 0px;
+                    border: 1px solid rgba(0, 200, 255, 0.3);
+                    box-shadow: 0 0 40px rgba(0, 200, 255, 0.3);
+                    text-align: center;
+                    color: white;
+                `;
+                
+                modalContent.innerHTML = `
+                    <h3 style="color: #00d4ff; margin-bottom: 1rem;">📁 ${folderText}</h3>
+                    <p style="margin-bottom: 1.5rem;">This would open the ${folderName} directory.<br>Here you would integrate your file system.</p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="
+                        background: linear-gradient(45deg, #0066cc, #00d4ff);
+                        color: white;
+                        border: none;
+                        padding: 0.8rem 1.5rem;
+                        border-radius: 0px;
+                        cursor: pointer;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    ">Close</button>
+                `;
+                
+                modal.appendChild(modalContent);
+                document.body.appendChild(modal);
+                
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+            });
+        });
+
+        // Utility functions
+        function showMessage(element, text, type) {
+            element.innerHTML = `<div class="message ${type}">${text}</div>`;
+            setTimeout(() => {
+                element.innerHTML = '';
+            }, 5000);
+        }
+
+        function clearMessages() {
+            message.innerHTML = '';
+            signupMessage.innerHTML = '';
+        }
+
+        // Initialize with demo account
+        users['demo'] = {
+            password: 'demo123',
+            role: 'admin',
+            createdAt: new Date().toISOString()
+        };
+    </script>
+</body>
+</html>
